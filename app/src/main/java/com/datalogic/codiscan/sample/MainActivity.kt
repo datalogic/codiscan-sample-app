@@ -347,7 +347,7 @@ class MainActivity : ComponentActivity(), PairingCodeListener, ConnectListener,
     private fun threadSafeToast(message: String){
         this.runOnUiThread(kotlinx.coroutines.Runnable {
             run {
-                Toast.makeText(applicationContext,message,Toast.LENGTH_LONG).show();
+                Toast.makeText(applicationContext,message,Toast.LENGTH_LONG).show()
             }
         })
     }
