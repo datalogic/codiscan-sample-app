@@ -12,11 +12,11 @@ import kotlinx.coroutines.launch
 /** Holds the bitmap of a pairing code formatted into a Data Matrix. Received from the CODiScan Service. */
 class DataMatrix: ViewModel() {
     private val _dataMatrixImage = MutableLiveData<ImageBitmap>()
-    val dataMatrixImage: LiveData<ImageBitmap> = _dataMatrixImage
+    val dataMatrixImage: LiveData<ImageBitmap?> = _dataMatrixImage
 
-    fun setDataMatrix(raw: Bitmap){
+    fun setDataMatrix(raw: Bitmap?){
         viewModelScope.launch {
-            _dataMatrixImage.value = raw.asImageBitmap()
+            _dataMatrixImage.value = raw?.asImageBitmap()
         }
     }
 }

@@ -30,21 +30,25 @@ class ListenerResponse: ViewModel() {
     val setConfigTime : LiveData<String> = _setConfigTime
     val connected : LiveData<Boolean> = _connected
 
-
+    /**
+     * Set the data/timestamp of a given type of listener event. To be displayed on listener page.
+     * @param type the given type of listener event to set status for.
+     * @param data specific text for a given event.
+     */
     fun setTime(type: ListenerType, data: String = ""){
         viewModelScope.launch {
             when(type){
-                ListenerType.BATTERY -> _batteryStatusTime.value = "Battery Charge: $data\n${getCurrentDateTime()}"
+                ListenerType.BATTERY -> _batteryStatusTime.value = "$data\n${getCurrentDateTime()}"
                 ListenerType.CONNECT -> {
                     _connected.value = true
                     _connectTime.value = getCurrentDateTime()
                 }
-                ListenerType.DEVICE -> _deviceDetailsTime.value = "Device ID: $data\n${getCurrentDateTime()}"
+                ListenerType.DEVICE -> _deviceDetailsTime.value = "$data\n${getCurrentDateTime()}"
                 ListenerType.DISCONNECT -> {
                     _connected.value = false
                     _disconnectTime.value = getCurrentDateTime()
                 }
-                ListenerType.GET -> _getConfigTime.value = "Expected config good?: $data\n${getCurrentDateTime()}"
+                ListenerType.GET -> _getConfigTime.value = "$data\n${getCurrentDateTime()}"
                 ListenerType.PAIRING -> _pairingCodeTime.value = "Pairing Code: $data\n${getCurrentDateTime()}"
                 ListenerType.SCAN -> _scanTime.value = "Scan Data: $data\n${getCurrentDateTime()}"
                 ListenerType.SET -> _setConfigTime.value = "Status: $data\n${getCurrentDateTime()}"
@@ -52,6 +56,15 @@ class ListenerResponse: ViewModel() {
         }
     }
 
+    /**
+     * Sets the the status of the connection to the CODiScan.
+     * @param connected true if the CODiScan is connected, false if disconnected.
+     */
+    fun setConnected(connected: Boolean){
+        _connected.value = connected
+    }
+
+    /** Helper function to get the current date/time */
     private fun getCurrentDateTime(): String {
         return Calendar.getInstance().time.toString()
     }
